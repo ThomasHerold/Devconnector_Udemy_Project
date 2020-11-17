@@ -1,3 +1,4 @@
 {
-    "mongoURI": "mongodb+srv://tomDB9795:wke27hLo449y78HG@devconnect.jseod.mongodb.net/<dbname>?retryWrites=true&w=majority"
+    "mongoURI": "mongodb+srv://tomDB9795:wke27hLo449y78HG@devconnect.jseod.mongodb.net/<dbname>?retryWrites=true&w=majority",
+    "jwtSecret": "secretjwttoken"
 }
