@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
+import PropTypes from 'prop-types';
 
-const Register = () => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -23,10 +27,15 @@ const Register = () => {
     const handleSubmit = (evt) => {
         evt.preventDefault();
         if(password !== verifyPass) {
-            console.log('Passwords do ntot match');
+            setAlert('Passwords do not match', 'danger');
         } else {
-            console.log(formData);
+            register(formData);
         }
+    };
+
+    // Redirect if authenticated
+    if(isAuthenticated) {
+        return <Redirect to="/dashboard" />
     };
 
     return (
@@ -35,10 +44,10 @@ const Register = () => {
         <p className="lead"><i className="fas fa-user"></i> Create Your Account</p>
         <form className="form" onSubmit={handleSubmit}>
             <div className="form-group">
-            <input type="text" placeholder="Name" name="name" value={name} onChange={handleChange} required />
+            <input type="text" placeholder="Name" name="name" value={name} onChange={handleChange} />
             </div>
             <div className="form-group">
-            <input type="email" placeholder="Email Address" name="email" value={email} onChange={handleChange} required />
+            <input type="email" placeholder="Email Address" name="email" value={email} onChange={handleChange}  />
             <small className="form-text">This site uses Gravatar so if you want a profile image, use a
                 Gravatar email
             </small>
@@ -48,10 +57,8 @@ const Register = () => {
                 type="password"
                 placeholder="Password"
                 name="password"
-                minLength="6"
-                value={password} 
+                value={password}
                 onChange={handleChange}
-                required
             />
             </div>
             <div className="form-group">
@@ -59,10 +66,8 @@ const Register = () => {
                 type="password"
                 placeholder="Confirm Password"
                 name="verifyPass"
-                minLength="6"
                 value={verifyPass} 
                 onChange={handleChange}
-                required
             />
             </div>
             <input type="submit" className="btn btn-primary" value="Register" />
@@ -74,4 +79,14 @@ const Register = () => {
     );
 };
 
-export default Register;
+Register.propTypes = {
+    setAlert: PropTypes.func.isRequired,
+    register: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired
+};
+
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { setAlert, register })(Register);
