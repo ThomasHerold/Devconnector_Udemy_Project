@@ -22,6 +22,23 @@ export const getCurrentProfile = () => async dispatch => {
     }
 };
 
+// Clear profile from state
+
+export const clearProfile = () => dispatch => {
+    try {
+
+        dispatch({
+            type: CLEAR_PROFILE
+        });
+
+    } catch (err) {
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+};
+
 // Get all profiles
 
 export const getAllProfiles = () => async dispatch => {
