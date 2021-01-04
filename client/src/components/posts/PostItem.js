@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import formatDate from '../../utils/formatDate';
 import { connect } from 'react-redux';
-import { addLike, removeLike } from '../../actions/post';
+import { addLike, removeLike, deletePost } from '../../actions/post';
 
-const PostItem = ({ auth, post: { _id, text, name, avatar, user, likes, comments, date }, addLike, removeLike }) => {
+const PostItem = ({ auth, post: { _id, text, name, avatar, user, likes, comments, date }, addLike, removeLike, showActions }) => {
 
     return (
         <div className="post bg-white p-1 my-1">
@@ -26,8 +26,9 @@ const PostItem = ({ auth, post: { _id, text, name, avatar, user, likes, comments
            <p className="post-date">
               Posted on {formatDate(date)}
           </p>
-          <button type="button" className="btn btn-light" onClick={() => addLike(_id)}>
-            <i className="fas fa-thumbs-up"></i>{' '}
+          {showActions && <Fragment>
+            <button type="button" className="btn btn-light" onClick={() => addLike(_id)}>
+             <i className="fas fa-thumbs-up"></i>{' '}
             {likes.length > 0 && (<span>{likes.length}</span>)}
           </button>
           <button type="button" className="btn btn-light" onClick={() => removeLike(_id)}>
@@ -40,24 +41,32 @@ const PostItem = ({ auth, post: { _id, text, name, avatar, user, likes, comments
             <button      
               type="button"
               className="btn btn-danger"
+              onClick={() => deletePost(_id)}
             >
               <i className="fas fa-times"></i>
             </button>
           )}
+          </Fragment>}
+          
         </div>
       </div>
     );
 };
 
+PostItem.defaultProps = {
+  showActions: true
+}
+
 PostItem.propTypes = {
     auth: PropTypes.object.isRequired,
     post: PropTypes.object.isRequired,
     addLike: PropTypes.func.isRequired,
-    removeLike: PropTypes.func.isRequired
+    removeLike: PropTypes.func.isRequired,
+    deletePost: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps, { addLike, removeLike })(PostItem);
+export default connect(mapStateToProps, { addLike, removeLike, deletePost })(PostItem);
