@@ -6,7 +6,7 @@ import Spinner from '../layouts/Spinner';
 import PostItem from '../posts/PostItem';
 import { Link } from 'react-router-dom';
 import CommentForm from './CommentForm';
-import CommentItem from './CommentItem;'
+import CommentItem from './CommentItem';
 
 const Post = ({ getSinglePost, post: { post, loading }, match }) => {
     useEffect(() => {
