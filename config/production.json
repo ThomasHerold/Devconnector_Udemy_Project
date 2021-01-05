@@ -1,0 +1,7 @@
+{
+    "mongoURI": "mongodb+srv://tomDB9795:wke27hLo449y78HG@devconnect.jseod.mongodb.net/<dbname>?retryWrites=true&w=majority",
+    "jwtSecret": "secretjwttoken",
+    "gitHubClientId": "670b64522bd99a52c9ea",
+    "gitHubSecret": "7917e2f1b4b841689aa961f2d9c53a34c473c721",
+    "githubToken": "3bc5f89b17b997f2e460f6c734cd3413082d489a"
+}
